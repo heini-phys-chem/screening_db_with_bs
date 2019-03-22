@@ -1,6 +1,7 @@
 import sys
 import csv
 from time import time
+import numpy as np
 
 import requests
 import urllib.request
@@ -17,9 +18,10 @@ def get_data(filename):
   inchis = []
 
   for line in lines:
-    names.append(line)
+    names.append(line) #line.split('\t')[0])
+    #inchis.append(line.split('\t')[1])
 
-  return names
+  return names#, inchis
 
 def merge_dicts(dict1, dict2):
   return(dict2.update(dict1))
@@ -29,13 +31,15 @@ if __name__ == "__main__":
   
   filename = sys.argv[1]
 
-  inchis = get_data(filename)
+  inchis = get_data(filename)#, inchis = get_data(filename)
   mols = []
 
   start = time()
 
   hof_data = {}
 
+  #inchis = ["C4H10"]
+  
   for i, mol in enumerate(inchis):
     quote_page = prefix + mol[:-1] + suffix
     page = urllib.request.urlopen(quote_page)
@@ -52,7 +56,9 @@ if __name__ == "__main__":
       table = soup.find('table', attrs={'class' : 'data'})
     
       # find all rows in table
+      #try:
       rows = table.find_all("tr")
+      #except: continue
     
       for j,row in enumerate(rows):
     
@@ -70,7 +76,7 @@ if __name__ == "__main__":
         except: continue
     
         # save to dict
-        key = inchis[i] + "_" + str(j)
+        key = inchis[i][:-1] + "_" + str(j)
         hof_data[key] = [ str(row.find_all('td')[0].text), str(row.find_all('td')[1].text[:6]), row.find_all('td')[2].text, row.find_all('td')[3].text, row.find_all('td')[4].text, fucking_inchi ]
         print(inchis[i][:-1], hof_data[key])
 
@@ -96,8 +102,10 @@ if __name__ == "__main__":
           # find first table
           table = soup.find('table', attrs={'class' : 'data'})
       
-          # find all rows in table
+        # find all rows in table
+        #try:
           rows = table.find_all("tr")
+        #except: continue
       
           for j,row in enumerate(rows):
       
@@ -115,7 +123,7 @@ if __name__ == "__main__":
             except: continue
       
             # save to dict
-            key = inchis[i] + "_" + str(j)
+            key = inchis[i][:-1] + "_" + str(j)
             hof_data[key] = [ str(row.find_all('td')[0].text), str(row.find_all('td')[1].text[:6]), row.find_all('td')[2].text, row.find_all('td')[3].text, row.find_all('td')[4].text, fucking_inchi ]
             print(inchis[i][:-1], hof_data[key])
         except: continue
@@ -129,4 +137,3 @@ if __name__ == "__main__":
     for key, value in hof_data.items():
         writer.writerow([key, value])
   
-  print("total run time: ", total_run_time)
