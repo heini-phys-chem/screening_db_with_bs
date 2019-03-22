@@ -17,10 +17,9 @@ def get_data(filename):
   inchis = []
 
   for line in lines:
-    names.append(line) #line.split('\t')[0])
-    #inchis.append(line.split('\t')[1])
+    names.append(line)
 
-  return names#, inchis
+  return names
 
 def merge_dicts(dict1, dict2):
   return(dict2.update(dict1))
@@ -30,15 +29,13 @@ if __name__ == "__main__":
   
   filename = sys.argv[1]
 
-  inchis = get_data(filename)#, inchis = get_data(filename)
+  inchis = get_data(filename)
   mols = []
 
   start = time()
 
   hof_data = {}
 
-  #inchis = ["C4H10"]
-  
   for i, mol in enumerate(inchis):
     quote_page = prefix + mol[:-1] + suffix
     page = urllib.request.urlopen(quote_page)
@@ -55,9 +52,7 @@ if __name__ == "__main__":
       table = soup.find('table', attrs={'class' : 'data'})
     
       # find all rows in table
-      #try:
       rows = table.find_all("tr")
-      #except: continue
     
       for j,row in enumerate(rows):
     
@@ -101,10 +96,8 @@ if __name__ == "__main__":
           # find first table
           table = soup.find('table', attrs={'class' : 'data'})
       
-        # find all rows in table
-        #try:
+          # find all rows in table
           rows = table.find_all("tr")
-        #except: continue
       
           for j,row in enumerate(rows):
       
