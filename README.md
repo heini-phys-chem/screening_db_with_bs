@@ -1,6 +1,6 @@
 # screening_db_with_bs
 
-script that takes molecular formulas as input and screens the nist database (using beatiful soup librarie from python) for heat of formations (returning heat of fomrations, type of experiment, literature and the InChI of the molecule)
+script that takes molecular formulas as input and screens the [NIST](https://webbook.nist.gov/) database (using beatiful soup librarie from python) for heat of formations (returning heat of fomrations, type of experiment, literature and the InChI of the molecule)
 
 using as
 ```
