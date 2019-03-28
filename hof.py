@@ -106,7 +106,7 @@ if __name__ == "__main__":
           rows = table.find_all("tr")
         #except: continue
 
-         for j,row in enumerate(rows):
+          for j,row in enumerate(rows):
 
             # ignore headers
             if row.find("th"): continue
