@@ -38,6 +38,7 @@ if __name__ == "__main__":
   hof_data = {}
 
   #inchis = ["C4H10"]
+  count = 0;
 
   for i, mol in enumerate(names):
     quote_page = prefix + mol[:-1] + suffix
@@ -75,9 +76,10 @@ if __name__ == "__main__":
         except: continue
 
         # save to dict
-        key = names[i][:-1]+ "_" + str(i) + "_" + str(j)
+        key = names[i][:-1] + "_"  + str(count) + "_" + str(i) + "_" + str(j)
         hof_data[key] = [ str(row.find_all('td')[0].text), str(row.find_all('td')[1].text[:6]), row.find_all('td')[2].text, row.find_all('td')[3].text, row.find_all('td')[4].text, inchi ]
-        print(names[i][:-1], hof_data[key])
+        count += 1
+        print("erster loop: ", key, hof_data[key])
 
     except: #continue
 
@@ -122,14 +124,11 @@ if __name__ == "__main__":
             except: continue
 
             # save to dict
-            key = names[i][:-1]+ "_" + str(i) + "_" + str(j)
+            key = names[i][:-1] + "_"  + str(count) + "_" + str(i) + "_" + str(j)
             hof_data[key] = [ str(row.find_all('td')[0].text), str(row.find_all('td')[1].text[:6]), row.find_all('td')[2].text, row.find_all('td')[3].text, row.find_all('td')[4].text, inchi ]
-            print(names[i][:-1], hof_data[key])
+            count += 1
+            print("zweiter loop: ", key, hof_data[key])
         except: continue
-
-  print(hof_data)
-
-  np.save("all_the_fucking_hofs.npy", hof_data)
 
   with open('dict.csv', 'w') as csv_file:
     writer = csv.writer(csv_file)
